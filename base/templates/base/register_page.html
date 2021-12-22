@@ -1,0 +1,14 @@
+{% extends 'main.html' %}
+{% block content %}
+<div>
+	<form method="POST" action="">
+		{% csrf_token %}
+		{% for field in form %}
+			<h3>{{field.label}}</h3>
+			{{field}}
+		{% endfor %}
+		<br><br>
+		<input type="submit" value="Create User"/>
+	</form>
+</div>
+{% endblock content %}

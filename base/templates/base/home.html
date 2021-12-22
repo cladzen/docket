@@ -1,0 +1,41 @@
+{% extends 'main.html' %}
+{% block content %}
+<h1>Welcome to the best todolist app ever.</h1>
+{% if request.user.is_authenticated %}
+<p>Welcome {{request.user.username}}</p>
+<a href="{% url 'logout' %}">Logout</a>
+{% else %}
+<p>Login to the World of Your dreams!</p>
+<a href="{% url 'login' %}">Login</a>
+<a href="{% url 'register' %}">Register</a>
+{% endif %}
+<br><br>
+{% if request.user.is_authenticated %}
+<form method="POST" action="" autocomplete="off">
+	{% csrf_token %}
+	<label>Enter Task</label>
+	<br>
+	<input type="text" name="name" placeholder="Enter Task Name"/>
+	<br><br>
+	<label>Enter Description</label>
+	<br>
+	<textarea name="description" placeholder="Enter Description"></textarea>
+	<br><br>
+	<input type="submit" name="submit" value="Add"/>
+</form>
+
+<div>
+	{% for task in tasks %}
+	{% if task.completed %}
+	<h6><a href="task/{{task.id}}/">{{task.name}}</a></h6>
+	{% else %}
+	<h3><a href="task/{{task.id}}/">{{task.name}}</a></h3>
+	{% endif %}
+	<a href="update_task/{{task.id}}/">Completed</a>
+	<a href="delete_task/{{task.id}}/">Delete</a>
+	{% endfor %}
+</div>
+{% endif %}
+
+{% endblock content %}
+
